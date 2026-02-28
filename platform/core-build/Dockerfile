@@ -1,7 +1,7 @@
 # platform/core-build/Dockerfile
 # syntax=docker/dockerfile:1.7
 
-ARG REGISTRY=192.168.30.202:23099
+ARG REGISTRY=ghcr.io/fuqingzh
 ARG RUNTIME_TAG=debian-py3.14-r4.5-20260115.01   # 或你实际 runtime tag
 FROM ${REGISTRY}/platform/core-runtime:${RUNTIME_TAG}
 

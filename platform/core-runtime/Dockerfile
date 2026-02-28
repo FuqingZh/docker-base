@@ -1,4 +1,5 @@
-ARG REGISTRY=192.168.30.202:23099
+
+ARG REGISTRY=ghcr.io/fuqingzh
 ARG BASE_TAG=3.14
 FROM ${REGISTRY}/thirdparty/python:${BASE_TAG}
 
