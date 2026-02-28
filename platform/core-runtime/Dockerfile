@@ -63,3 +63,6 @@ COPY scripts/dump_manifest.sh /usr/local/bin/dump_manifest.sh
 RUN set -eux; chmod +x /usr/local/bin/dump_manifest.sh; /usr/local/bin/dump_manifest.sh > /opt/runtime_manifest.txt
 
 CMD ["bash"]
+
+LABEL org.opencontainers.image.description="Core runtime image, including Python and R environments with common dependencies." \
+    org.opencontainers.image.licenses="MIT"

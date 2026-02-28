@@ -35,11 +35,6 @@ RUN --mount=type=cache,target=/var/cache/apt \
     ; \
     rm -rf /var/lib/apt/lists/*
 
-
-# Python tool (choose one standard)
-RUN python -m pip install --no-cache-dir pdm uv
-
-# R tool
-RUN R -q -e 'install.packages("renv", repos="https://cloud.r-project.org"); packageVersion("renv")'
-
 # 只做构建用，不需要 CMD
+LABEL org.opencontainers.image.description="Core build image, based on core runtime with additional build tools and libraries." \
+    org.opencontainers.image.licenses="MIT"
