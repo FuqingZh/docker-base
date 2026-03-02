@@ -33,7 +33,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
       apt-get install -y --no-install-recommends --fix-missing \
       vim \
       ca-certificates curl tzdata bash tar bzip2 \
-      libstdc++6 libgcc-s1 libssl3 libcurl4 libxml2 zlib1g \
+      libstdc++6 libgcc-s1 libssl3 libcurl4 libxml2 zlib1g libglpk40 \
       libfontconfig1 libfreetype6 \
       r-base \
       && break; \
@@ -56,8 +56,8 @@ RUN python -m pip install --no-cache-dir pdm uv
 RUN R -q -e 'install.packages("renv", repos="https://cloud.r-project.org"); packageVersion("renv")'
 
 
-RUN install -d -m 1777 /work /opt/cache
-WORKDIR /work
+RUN install -d -m 1777 /app /work /opt/cache
+WORKDIR /app
 
 COPY scripts/dump_manifest.sh /usr/local/bin/dump_manifest.sh
 RUN set -eux; chmod +x /usr/local/bin/dump_manifest.sh; /usr/local/bin/dump_manifest.sh > /opt/runtime_manifest.txt
