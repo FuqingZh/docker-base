@@ -1,8 +1,8 @@
 REGISTRY ?= ghcr.io/fuqingzh
-BASE_TAG ?= debian-py3.14-r4.5-20260227.1313
+BASE_TAG ?= debian-py3.14-r4.5-20260228.0951
 PY_BASE_TAG ?= 3.14
 PLATFORMS ?= linux/amd64
-NO_PROXY_BUILD ?= 0
+NO_PROXY_BUILD ?= 1
 
 http_proxy ?= $(HTTP_PROXY)
 https_proxy ?= $(HTTPS_PROXY)
