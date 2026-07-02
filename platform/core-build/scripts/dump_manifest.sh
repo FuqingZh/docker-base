@@ -34,3 +34,16 @@ pdm --version || true
 
 echo "=== renv ==="
 R -q -e 'packageVersion("renv")' || true
+echo
+
+echo "=== java build tools ==="
+java -version || true
+javac -version || true
+jar --version || true
+echo
+
+echo "=== native build packages ==="
+dpkg-query -W -f='${Package}=${Version}\n' \
+  default-jdk-headless \
+  libuv1-dev \
+  2>/dev/null | sort || true

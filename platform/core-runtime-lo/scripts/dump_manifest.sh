@@ -21,6 +21,14 @@ print(PropertyValue)
 PY
 echo
 
+echo "=== java runtime ==="
+java -version || true
+echo
+
+echo "=== graphviz ==="
+dot -V || true
+echo
+
 echo "=== libreoffice packages ==="
 dpkg-query -W -f='${Package}=${Version}\n' 'libreoffice*' 'libuno*' 'uno-libs-private' 'ure*' 'python3-uno' 2>/dev/null | sort || true
 echo
@@ -31,5 +39,7 @@ dpkg-query -W -f='${Package}=${Version}\n' \
   libcurl3t64-gnutls \
   libcurl4t64 \
   libreoffice-writer \
+  default-jre-headless \
+  graphviz \
   python3-uno \
   2>/dev/null | sort || true

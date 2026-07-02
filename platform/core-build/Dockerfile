@@ -24,10 +24,11 @@ RUN --mount=type=cache,target=/var/cache/apt \
     # 基础构建链
     build-essential make cmake pkg-config \
     git \
+    default-jdk-headless \
     # R 编译（若会编译 R 包）
     r-base-dev \
     # 常见 R/Python native 依赖
-    libcurl4-openssl-dev libssl-dev libxml2-dev zlib1g-dev libglpk-dev \
+    libcurl4-openssl-dev libssl-dev libxml2-dev zlib1g-dev libglpk-dev libuv1-dev \
     libfontconfig1-dev libfreetype6-dev \
     libharfbuzz-dev libfribidi-dev \
     # Python native wheels（若需要）
