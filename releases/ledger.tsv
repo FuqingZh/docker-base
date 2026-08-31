@@ -1,0 +1,2 @@
+date	image	source_revision	local_image_id	remote_manifest_digest	status	validation
+2026-08-31	192.168.30.202:23099/platform/mono-runtime:ubuntu24.04-mono6.8.0.105-20260831	73d586253bb3fe4edd2b880a0066ad0f43c438a5	sha256:7089c526a4f105cd28b3dbd8c62c396edfe13f852d6f3d5aef8fae085eaf988a	sha256:442d0aaf893acb4881769ca2d5ffaaab5ef47dd804362ce435c971af66f51aab	published_verified	make check; System.Data smoke; QC_1 RAW conversion; /home/fqzhang/tmp/docker-base-mono-20260831.XUADfi/README.md
