@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := help
+
 REGISTRY ?= ghcr.io/fuqingzh
 BASE_TAG ?= debian-py3.14-r4.5-20260228.0951
 PY_BASE_TAG ?= 3.14
@@ -15,6 +17,13 @@ PYTHON38_SOURCE_IMAGE ?= python:3.8-slim-bullseye
 PYTHON38_TARGET_TAG ?= 3.8-slim-bullseye
 PLATFORMS ?= linux/amd64
 NO_PROXY_BUILD ?= 1
+MONO_BASE_IMAGE ?= 192.168.30.202:23099/thirdparty/ubuntu:24.04@sha256:9dc159af07be6f78d586ba6f3ab67fc8ff115a76710427d0699be30068671103
+MONO_VERSION ?= 6.8.0.105+dfsg-3.6ubuntu2
+MONO_BUILD_NETWORK ?= default
+MONO_TAG ?= ubuntu24.04-mono6.8.0.105-20260831
+MONO_IMAGE = $(REGISTRY)/platform/mono-runtime:$(MONO_TAG)
+SMOKE_CPUS ?= 4
+SMOKE_MEMORY ?= 2g
 
 http_proxy ?= $(HTTP_PROXY)
 https_proxy ?= $(HTTPS_PROXY)
@@ -27,6 +36,26 @@ PROXY_BUILD_ARGS := --build-arg http_proxy=$(http_proxy) --build-arg https_proxy
 endif
 
 .PHONY: runtime-build runtime-lo-build trait-association-cli-build signalp6-build build-build runtime-push runtime-lo-push trait-association-cli-push signalp6-push build-push python38-slim-mirror runtime-buildx-push runtime-lo-buildx-push trait-association-cli-buildx-push signalp6-buildx-push build-buildx-push all-buildx-push promote-stable
+.PHONY: help check mono-build mono-smoke mono-push
+
+help:
+	@printf '%s\n' 'make check: source checks (no Docker/network)' 'Local builds: runtime-build build-build runtime-lo-build trait-association-cli-build signalp6-build mono-build' 'Mono acceptance: mono-smoke (local image only)' 'Publication: *-push, *-buildx-push, python38-slim-mirror, promote-stable' 'REGISTRY defaults to ghcr.io/fuqingzh; set REGISTRY=192.168.30.202:23099 for Harbor.' 'See README.md for build contexts and required external inputs.'
+
+check:
+	bash scripts/check.sh
+
+mono-build:
+	docker build --platform $(PLATFORMS) --network=$(MONO_BUILD_NETWORK) \
+	  --build-arg BASE_IMAGE=$(MONO_BASE_IMAGE) --build-arg MONO_VERSION=$(MONO_VERSION) \
+	  $(PROXY_BUILD_ARGS) \
+	  -t $(MONO_IMAGE) ./platform/mono-runtime
+
+mono-smoke:
+	docker run --rm --pull=never --network=none --cpus=$(SMOKE_CPUS) --memory=$(SMOKE_MEMORY) \
+	  $(MONO_IMAGE) check-mono
+
+mono-push:
+	docker push $(MONO_IMAGE)
 
 runtime-build:
 	docker build \
