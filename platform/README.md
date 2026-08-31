@@ -1,27 +1,20 @@
+# Platform images
+
+Run from the repository root. Build and publication are separate operations;
+see the [root catalog](../README.md) for all image mappings.
+
 ```bash
-TAG_IMMUTABLE=debian-py3.14-r4.5-20260115.01
-
-# core-runtime
-cd project/docker-base/platform/core-runtime
-
-docker build \
-  -t 192.168.30.202:23099/platform/core-runtime:${TAG_IMMUTABLE} \
-  .
-
-docker push 192.168.30.202:23099/platform/core-runtime:${TAG_IMMUTABLE}
-
-# core-build
-cd project/docker-base/platform/core-build
-docker build \
-  --build-arg TAG_BASE=${TAG_IMMUTABLE_BUILD} \
-  -t 192.168.30.202:23099/platform/core-build:${TAG_IMMUTABLE_BUILD} \
-  .
-docker push 192.168.30.202:23099/platform/core-build:${TAG_IMMUTABLE_BUILD}
-
-
+make runtime-build REGISTRY=192.168.30.202:23099
+make build-build REGISTRY=192.168.30.202:23099
 ```
 
+`build-build` passes `RUNTIME_TAG=$(BASE_TAG)` to the Dockerfile, not `TAG_BASE`.
+Override `BASE_TAG` consistently when building both layers.
+
 ## Image Layers
+
+`platform/mono-runtime` is an independent Ubuntu/Mono baseline. It does not
+inherit the Python/R stack. See [Mono build and acceptance](mono-runtime/README.md).
 
 `platform/core-runtime` is the default Python/R runtime baseline.
 

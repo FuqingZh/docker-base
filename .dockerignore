@@ -1,0 +1,15 @@
+.git
+**/__pycache__
+**/*.pyc
+**/*.log
+.env*
+**/*.deb
+**/*.raw
+**/*.RAW
+**/*.mzML
+**/*.tar
+**/*.tar.gz
+**/*.tar.zst
+**/*.zip
+tests
+releases
